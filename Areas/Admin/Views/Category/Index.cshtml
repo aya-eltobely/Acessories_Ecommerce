@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AccessoriesWebsite.Models.Category>
+
+
+<h1 class="mb-5">All Categories</h1>
+
+<p>
+    <button class="btn btn-primary ">
+        <a asp-action="Create" class="text-white text-decoration-none">Create New</a>
+    </button>
+   
+
+   @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCat" data-url="@Url.Action("Create")">
+        Create New
+    </button> *@
+</p>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                    @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@("#editCat-" + @item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">
+                        Edit
+                    </button>
+                    @await Html.PartialAsync("_EditPartialView", item) *@
+
+                    <button class="btn btn-primary ">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-white text-decoration-none">Edit</a>
+                    </button>
+                
+
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="@("#deleteCat-" + @item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
+                        Delete
+                    </button>
+                    @await Html.PartialAsync("_DeletePartialView", item)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@* @await Html.PartialAsync("_CreaetPartialView",new AddCatVM()) *@

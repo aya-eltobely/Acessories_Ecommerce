@@ -1,0 +1,468 @@
+﻿@model Product
+
+
+
+<div class="card">
+
+    <nav class="cardNav">
+        <a asp-controller="Product" asp-action="Index">
+            <i class="fa-solid fa-chevron-left" ></i>
+            &nbsp; &nbsp; Back to all Products
+        </a>
+    </nav>
+
+    <div class="photoDescription">
+
+        <div class="photo">
+            <img src="~/Images/@Model.ImageUrl">
+        </div>
+
+
+        <div class="description">
+
+            <h2>@Model.Name</h2>
+            <h1> @Model.Price EGP</h1>
+
+            @if (@Model.InStock <= 0)
+            {
+                <h4 class=""> Out Of Stock </h4>
+            }
+            else
+            {
+                <h4> @Model.InStock Item Avalibale</h4>
+
+            }
+            <p> @Model.Description</p>
+
+
+            
+
+            <div class="action">
+
+                <input type="number" min="1" value="1" style="width:52px;width: 75px;border: 1px solid #aedaa6;padding: 7px 14px;margin-right: 25px;margin-top: 20px;" id="ProdQuantity" max="@Model.InStock" oninput="validateQuantity()" />
+            @*     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                <div class="d-flex mb-4" style="max-width: 300px">
+                    <button class="btn btn-primary px-3 me-2" data-action="decrease">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                    <div class="form-outline">
+                        <input disabled id="form1" min="0" name="quantity" value="${cartItem.Quantity}" type="number" class="form-control" />
+                        <label class="form-label" for="form1">Quantity</label>
+                    </div>
+
+                    <button class="btn btn-primary px-3 ms-2" data-action="increase">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div> *@
+
+                @*   @if (@Model.InStock <= 0)
+                {
+                <button onclick="saveDataToLocalStorage()" disabled>  <a  class="add-to-cart btn btn-default" type="button"> add to cart </a> </button>
+                }
+                else
+                { *@
+                <button onclick="saveDataToLocalStorage(event)" id="addToCartBtn">  <a class="add-to-cart btn btn-default" type="button"> add to cart </a> </button>
+                @* } *@
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+
+* { box-sizing: border-box; }
+
+body {
+  
+  /* background: #aedaa6; */
+  font-family: "Raleway";
+}
+  .card {
+    /* width: 650px; */
+    /* height: 375px; */
+    position: absolute;
+    background: white;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    transition: all 0.3s;
+  }
+    .card:hover
+    { 
+      box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+    
+    .cardNav {
+      
+      width: 100%;
+      color: #727272;
+      text-transform: uppercase;
+      padding: 20px;
+      border-bottom: 2px solid #efefef;
+      font-size: 12px;
+    }
+
+        .cardNav a {
+            color: #727272;
+    }
+
+            .cardNav a:hover {
+                color: #aedaa6;
+                text-decoration:none
+        }
+     
+      
+    
+    
+    .photo {
+      
+      padding: 30px;
+      width: 45%;
+      text-align: center;
+      float: left;
+    }
+
+        .photo img {
+            max-height: 240px; 
+      }
+      
+    
+    
+    .description {
+      
+       padding: 30px;
+       float: left;
+       width: 55%;
+       border-left: 2px solid #efefef;
+    }
+
+        .description h1 {
+         color: #515151;
+         font-weight: 300;
+         padding-top: 15px;
+         margin: 0;
+         font-size: 30px;
+         font-weight: 300;
+       }
+     
+       .description h2 {
+        color: #515151;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: 500;
+       }
+
+    .description h4 {
+        margin: 0;
+         color: #727272;
+         text-transform: uppercase;
+         font-weight: 500;
+         font-size: 12px;
+         margin-top:20px
+       }
+      
+       .description p { 
+         font-size: 12px; 
+         line-height: 20px;
+         color: #727272;
+         padding: 20px 0;
+         margin: 0;
+      }
+      
+       .description button {
+
+         outline: 0;
+         border: 0;
+         background: none;
+         border: 1px solid #d9d9d9;
+         /* padding: 8px 0px; */
+         margin-bottom: 30px;
+         color: #515151;
+         text-transform: uppercase;
+         /* width: 125px; */
+         font-family: inherit;
+         margin-right: 5px;
+         transition: all 0.3s ease;
+         font-weight: 500;
+       }
+
+
+       .description button:hover
+        {
+           
+           /* background: darken(white, 2%); */
+           border: 1px solid #aedaa6;
+           color: #aedaa6;
+           cursor: pointer;
+           
+         }
+    .outOfStock {
+        color: #aedaa6 !important;
+        font-weight: 900 !important;
+        font-size: 18px !important;
+    }
+    /**
+	img {
+  max-width: 100%; }
+
+.preview {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px; } }
+
+.preview-pic {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.preview-thumbnail.nav-tabs {
+  border: none;
+  margin-top: 15px; }
+  .preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%; }
+    .preview-thumbnail.nav-tabs li img {
+      max-width: 100%;
+      display: block; }
+    .preview-thumbnail.nav-tabs li a {
+      padding: 0;
+      margin: 0; }
+    .preview-thumbnail.nav-tabs li:last-of-type {
+      margin-right: 0; }
+
+.tab-content {
+  overflow: hidden; }
+  .tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+            animation-name: opacity;
+    -webkit-animation-duration: .3s;
+            animation-duration: .3s; }
+
+.card {
+  margin-top: 50px;
+  background: #eee;
+  padding: 3em;
+  line-height: 1.5em; }
+
+media screen and (min-width: 997px) {
+  .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; } }
+
+.details {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.colors {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.product-title, .price, .sizes, .colors {
+  text-transform: UPPERCASE;
+  font-weight: bold; }
+
+.checked, .price span {
+  color: #ff9f1a; }
+
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+  margin-bottom: 15px; }
+
+.product-title {
+  margin-top: 0; }
+
+.size {
+  margin-right: 10px; }
+  .size:first-of-type {
+    margin-left: 40px; }
+
+.color {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  height: 2em;
+  width: 2em;
+  border-radius: 2px; }
+  .color:first-of-type {
+    margin-left: 20px; }
+
+.add-to-cart, .like {
+  background: #ff9f1a;
+  padding: 1.2em 1.5em;
+  border: none;
+  text-transform: UPPERCASE;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background .3s ease;
+          transition: background .3s ease; }
+  .add-to-cart:hover, .like:hover {
+    background: #b36800;
+    color: #fff; }
+
+.not-available {
+  text-align: center;
+  line-height: 2em; }
+  .not-available:before {
+    font-family: fontawesome;
+    content: "\f00d";
+    color: #fff; }
+
+.orange {
+  background: #ff9f1a; }
+
+.green {
+  background: #85ad00; }
+
+.blue {
+  background: #0076ad; }
+
+.tooltip-inner {
+  padding: 1.3em; }
+
+ opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+ opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } } */
+
+</style>
+
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+
+        var CartArray = JSON.parse(localStorage.getItem('cart')) || [];
+
+
+        function saveDataToLocalStorage(event) {
+
+            var ProdQuantity = parseInt(document.getElementById("ProdQuantity").value, 10);
+
+            if (isNaN(ProdQuantity) | ProdQuantity ==0 | @Model.InStock<= 0) {
+                // document.getElementById("addToCartBtn").setAttribute("disabled", true);
+                event.preventDefault();
+                return false;
+
+            }
+
+            var existingItemIndex = findItemIndex(@Model.Id);
+            if (existingItemIndex !== -1) {
+                // Item already exists, update quantity
+                CartArray[existingItemIndex].Quantity += ProdQuantity;
+            } else {
+                // Item does not exist, add a new item
+                var data = {
+                    ProdId: @Model.Id,
+                    ProdName: "@Model.Name",
+                    ProdInStock: @Model.InStock,
+                    Quantity: ProdQuantity,
+                    ImageUrl: "@Model.ImageUrl",
+                    Price: @Model.Price,
+                    Subtotal: ProdQuantity * @Model.Price
+                };
+                CartArray.push(data);
+            }
+            localStorage.setItem('cart', JSON.stringify(CartArray));
+
+            var cartLink = document.getElementById('cartLink');
+            var cartArray = JSON.parse(localStorage.getItem('cart'));
+            var cartItemCount = cartArray.length;
+
+            // Update the cart icon based on the number of items
+            if (cartItemCount > 0) {
+                cartLink.innerHTML = '<i class="fas fa-shopping-cart" ></i> <span style="font-size:23px;position:absolute;top: -6px;right: -11px;"> ' + cartItemCount + ' </span> ';
+            } else {
+                cartLink.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+            }
+            alert("Item added to cart");
+        }
+
+
+        function findItemIndex(prodId) {
+            for (var i = 0; i < CartArray.length; i++) {
+                if (CartArray[i].ProdId === prodId) {
+                    return i; // Item found, return its index
+                }
+            }
+            return -1; // Item not found
+        }
+
+        function validateQuantity() {
+            var input = document.getElementById('ProdQuantity');
+            var maxStock = parseInt(input.getAttribute('max'), 10);
+
+            if ( (event.keyCode === 46 || event.key === 'Delete') | (event.keyCode === 8 || event.key === 'Backspace')  ) {
+                event.preventDefault();
+                console.log('Delete key is disabled.');
+            }
+            if ( parseInt(input.value, 10) > maxStock) {
+                input.value = maxStock;
+            }
+        }
+
+
+   
+
+   
+
+    </script>
+}

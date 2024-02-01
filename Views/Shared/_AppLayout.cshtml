@@ -1,0 +1,172 @@
+﻿@using Microsoft.AspNetCore.Identity;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AccessoriesWebsite</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="...">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="..." crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lemon&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Lemon&family=Lobster&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Lemon&family=Lobster&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AccessoriesWebsite.styles.css" asp-append-version="true" />
+
+
+</head>
+<body>
+    <header>
+
+
+        <nav class="navbar navbar-expand-lg navbar-light" style="box-shadow: 5px 13px 22px -8px rgba(0,0,0,0.28);">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" style=" font-family: 'Lobster', sans-serif; font-weight: 900;font-size: 23px;"> Yooty Store </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+
+                <div class="navbar-nav mr-auto">
+
+                    <div class="navLeft">
+                        <div class="nav-item active">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </div>
+
+                        <div class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                        </div>
+
+                        <div class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                        </div>
+
+                        <div class="nav-item">
+                            <a class="nav-link" asp-controller="Product" asp-action="Index">All Products</a>
+                        </div>
+
+
+                        
+                    </div>
+
+                    <div class="navRight d-flex align-items-center">
+
+                        <div class="nav-item " style="height: 39px;">
+                            <a style="position:relative" class="nav-link" id="cartLink" asp-controller="Cart" asp-action="Index"> <i class="fa-thin fa-shopping-cart"></i> </a>
+                        </div>
+
+                        @*check for user cookie in view *@
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="nav-item dropdown pt-2">
+                                <a id="userDropdown" role="button" class="dropdown-toggle "
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-user-tie" style="font-size: 25px;"></i> @User.Identity.Name
+                                </a>
+
+
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <div class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order History</a>
+
+                                    </div>
+
+                                    <div class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                            
+                        }
+
+                        else
+                        {
+                            <div class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            </div>
+
+                            <div class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Log In</a>
+                            </div>
+                        }
+                        @*.....*@
+
+                        <div> @RenderSection("Ad", false) </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+
+        // Function to update the cart icon based on the number of items
+            var cartLink = document.getElementById('cartLink');
+            var cartData = JSON.parse(localStorage.getItem('cart'));
+            var cartItemCount = cartData?.length;
+
+            // Update the cart icon based on the number of items
+            if (cartItemCount > 0) {
+            // cartLink.innerHTML = '<i class="fas fa-shopping-cart"></i> (' + cartItemCount + ')';
+            cartLink.innerHTML = '<i class="fas fa-shopping-cart"></i> <span style="font-size:23px;position:absolute;top: -6px;right: -11px;"> ' + cartItemCount + ' </span> ';
+            } else {
+
+                cartLink.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+                // cartLink.disabled = true;
+            }
+
+            // there is no items in cart in local storage
+            // if ( cartItemCount <= 0 ) {
+            //     console.log("no cart");
+
+            //     cartLink.addEventListener('click', function (event) {
+            //         event.preventDefault();
+            //         Optionally, you can add other logic here
+            //     });
+            // }
+            // else if (cartItemCount > 0) {
+            //     console.log(" cart");
+            //     cartLink.addEventListener('click', function (event) {
+            //         Optionally, you can add other logic here
+            //     });
+            //     cartLink.setAttribute('asp-controller', 'Cart');
+            //     cartLink.setAttribute('asp-action', 'Index');
+
+            // }
+           
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

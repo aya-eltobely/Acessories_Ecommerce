@@ -1,0 +1,266 @@
+﻿@model ProductPageResult<Product>
+
+
+
+<h1 class="mb-5">All Products</h1>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<div class=" my-4">
+    <div class="d-flex form-inputs ">
+
+        <form asp-controller="Product" asp-action="Index" method="get" class="searchForm ">
+            <div>
+                <input type="text" id="searchInput" name="search" value="@Model.search" oninput="toggleIcons()" />
+                <i id="searchIcon" class="fa-solid fa-magnifying-glass" style="display: none;"></i>
+                <i id="exitIcon" class="fa-solid fa-times" style="display: none;"></i>
+            </div>
+            <button class="searchButton" type="submit">Search</button>
+
+        </form>
+
+    </div>
+</div>
+
+@if (Model.Data.Count == 0)
+{
+    <p>There is no result</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Name
+                </th>
+                @* <th>
+            Description
+            </th> *@
+                <th>
+                    Price
+                </th>
+
+                <th>
+                    InStock
+                </th>
+                @*  <th>
+            category
+            </th> *@
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>
+                        <img src="~/Images/@item.ImageUrl" style="width:100px" />
+                    </td>
+                    <td style="width: 381px;">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @*  <td>
+            @Html.DisplayFor(modelItem => item.Description)
+            </td> *@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InStock)
+                    </td>
+                    @*  <td>
+            @Html.DisplayFor(modelItem => item.category.Name)
+            </td> *@
+                    <td style="display: flex;justify-content: space-evenly;">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> |
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="@("#deleteProd-" + @item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
+                            Delete
+                        </button>
+                        @await Html.PartialAsync("_DeletePartialView", item)
+                        @*  <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+}
+
+
+
+
+<div class="pagination d-flex justify-content-center">
+    <a href="@Url.Action("Index", new { page = Model.PageNumber - 1, search = Model.search })" class="@(Model.PageNumber <= 1 ? "disabled" : "")">Previous</a>
+
+    @if (Model.PageNumber > 3)
+    {
+        <a href="@Url.Action("Index", new { page = 1, search = Model.search })">1</a>
+        <span>...</span>
+    }
+
+    @for (int i = Math.Max(1, Model.PageNumber - 2); i <= Math.Min(Model.TotalPages, Model.PageNumber + 2); i++)
+    {
+        <a href="@Url.Action("Index", new { page = i, search = Model.search })" class="@(Model.PageNumber == i ? "active" : "")">@i</a>
+    }
+
+    @if (Model.PageNumber < Model.TotalPages - 2)
+    {
+        <span>...</span>
+        <a href="@Url.Action("Index", new { page = Model.TotalPages, search = Model.search })">@Model.TotalPages</a>
+    }
+
+    <a href="@Url.Action("Index", new { page = Model.PageNumber + 1, search = Model.search })" class="@(Model.PageNumber >= Model.TotalPages ? "disabled" : "")">Next</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    a.disabled {
+        color: gray;
+        pointer-events: none; /* Disable click events */
+        text-decoration: none; /* Remove the underline */
+        cursor: not-allowed; /* Change cursor style to indicate it's not clickable */
+    }
+        .pagination {
+        display: flex;
+        list - style: none;
+        padding: 0;
+    }
+
+            .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        text - decoration: none;
+        color: #333;
+        border: 1px solid #ccc;
+        border - radius: 3px;
+        cursor: pointer;
+    }
+
+                .pagination a.disabled {
+        color: #777;
+        cursor: not - allowed;
+        pointer - events: none; /* Prevent clicks on disabled buttons */
+    }
+
+                .pagination a:hover {
+        background - color: #eee;
+    }
+
+                .prodDetails
+    {
+        position: absolute;
+        top: 52 %;
+        right: 20px
+    }
+
+
+    .searchForm {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        width: 68%;
+        margin: auto;
+    }
+
+        .searchForm > div {
+            position: relative;
+            width: 75%;
+        }
+
+            .searchForm > div input {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .searchForm > div i {
+                font-size: 20px;
+                position: absolute;
+                top: 14px;
+                right: 22px;
+            }
+
+    .searchButton {
+        border: none;
+        background-color: #aedaa6;
+        padding: 7px 27px;
+        margin-left: 10px;
+        border-radius: 5px;
+    }
+
+        .searchButton:hover {
+            box-shadow: 0px 0px 7px 2px #aedaa6;
+        }
+
+</style>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+    toggleIcons();
+
+    function toggleIcons() {
+        var searchInput = document.getElementById('searchInput');
+        var searchIcon = document.getElementById('searchIcon');
+        var exitIcon = document.getElementById('exitIcon');
+
+        if (searchInput.value.trim() !== '') {
+            // Show exit icon and hide search icon
+            searchIcon.style.display = 'none';
+            exitIcon.style.display = 'inline-block';
+        } else {
+            // Show search icon and hide exit icon
+            searchIcon.style.display = 'inline-block';
+            exitIcon.style.display = 'none';
+        }
+    }
+
+    // Add an event listener to clear the input and toggle icons when the exit icon is clicked
+    document.getElementById('exitIcon').addEventListener('click', function () {
+        document.getElementById('searchInput').value = '';
+        toggleIcons();
+
+        console.log("call ajax");
+
+        //call all product
+
+        $.ajax({
+            url: '/Admin/Product/callProductsUsingAjax',
+            method: 'GET',
+            success: function (data) {
+
+                window.location.href = data.redirectUrl;
+                console.log(data);
+
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+
+    });
+</script>

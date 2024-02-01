@@ -1,0 +1,105 @@
+﻿@model List<OrderWithOrderItems>
+<h1 style="margin-top:50px"> Orders</h1>
+
+<br />
+<br />
+
+
+@foreach( var order in Model )
+{
+
+    <div class="container mt-1 mb-5" style="padding:20px;border: 2px solid #DDD;">
+
+        <h5>Order Number : <span> @order.orderId </span> </h5>
+
+        <div class="card-body " id="cartItemsContainer" style="margin-top: 30px;">
+
+            @foreach (var orderitem in order.productDetailViewModels)
+            {
+                <div class="row mb-5">
+
+                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                        <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light"
+                            style="width: 87px;">
+                            <img src="~/Images/@orderitem.imageName" class="w-100" alt="@orderitem.imageName"
+                                style="border-radius:5%">
+                        
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" style="margin-left: -31px;">
+                        <p style="width: 100%;"><strong>@orderitem.prodName</strong></p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                        <p>@orderitem.quantity</p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-12 mb-4 mb-lg-0">
+
+                        <p class="text-start text-md-center" style="min-width: 100px">
+                            <strong class="total-price"> @orderitem.subtotal EGP </strong>
+                        </p>
+                   
+
+                    </div>
+
+                    @* <hr style="width: 75%; text-align: center; margin: 30px auto;"> *@
+
+                </div>
+            }
+        </div>
+
+
+        <h5 class="text-right">Total Amount : <span> @order.totalAmount </span></h5>
+
+
+    </div>
+
+
+
+}
+
+
+
+
+
+
+<style>
+    body {
+  
+  font-family: "Raleway";
+}
+ .quantityBtn
+    {
+        height: 33px;
+        border: 1px solid #aedaa6;
+        background-color: snow;
+        border-radius: 30%;
+    }
+
+    .quantityIpt {
+        width: 62px;
+        height: 33px;
+        background-color: white;
+        border: none;
+        font-size: 22px;
+        padding-left: 18px;
+    }
+    .deleteBtn
+    {
+        border: 1px solid #aedaa6;
+        background-color: white;
+        border-radius: 20%;
+        margin-left: 25px;
+    }
+
+    .deleteBtn:hover
+    {
+            box-shadow: 0px 0px 7px 2px #aedaa6;
+    }
+    .fa-trash
+    {
+        color: #aedaa6;
+    }
+</style

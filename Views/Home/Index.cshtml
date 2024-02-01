@@ -1,0 +1,110 @@
+﻿
+
+
+ <div class="banner">
+
+
+    <section class="banner_phara">
+
+        <h2>Welcome To Yooty Accessories</h2>
+        <a class="nav-link" asp-controller="Product" asp-action="Index"> Shop Here </a>
+
+    </section>
+
+    <div class="blurDiv"></div>
+ @*    <section class="banner_photo">
+        <img src="~/images/bg2.webp" />
+    </section> *@
+
+
+ </div>
+
+
+
+ <style>
+     .banner{
+       /*   display:flex;
+         justify-content:space-between; */
+         background-image:url('../Images/bg2.webp');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        width: 100%;
+        height:88.9vh;
+        margin-top:20px;
+        position:relative;
+        position: absolute;
+        top: 57px;
+        left: 0;
+
+     }
+     .blurDiv
+     {
+        background-color: rgb(0,0,0,0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+     }
+
+    .banner_phara {
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 15%;
+    }
+
+    .banner_phara a{
+            margin-top: 30px;
+            border:2px solid #aedaa6;
+            padding: 3px 26px;
+            cursor:pointer;
+            z-index: 100;
+            color: white;
+            border-radius: 5px;
+            font-size: 25px;
+        }
+
+            .banner_phara a:hover {
+        text-decoration: none;
+        color: white;
+        box-shadow: 0px 0px 7px 2px;}
+        .banner_phara h2 {
+            z-index: 100;
+            font-weight:900
+        }
+ </style>
+
+@* <div id="intro-example"
+     class="p-5 text-center bg-image"
+     style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp'); height: 100vh;position:relative">
+
+
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);position: absolute;top: 0; left: 0; width:100%;height:100%">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="text-white">
+                <h1 class="mb-3">Learn Bootstrap 5 with MDB</h1>
+                <h5 class="mb-4">Best & free guide of responsive web design</h5>
+                <a data-mdb-ripple-init
+                   class="btn btn-outline-light btn-lg m-2"
+                   href="https://www.youtube.com/watch?v=c9B4TPnak1A"
+                   role="button"
+                   rel="nofollow"
+                   target="_blank">Start tutorial</a>
+                <a data-mdb-ripple-init
+                   class="btn btn-outline-light btn-lg m-2"
+                   href="https://mdbootstrap.com/docs/standard/"
+                   target="_blank"
+                   role="button">Download MDB UI KIT</a>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+ *@
