@@ -26,11 +26,11 @@ namespace AccessoriesWebsite.Helpers
             userManager.CreateAsync(new ApplicationUser
             {
                 UserName = "Ayaa",
-                Email = "aya.ayman@gmail.com"
-            }, "Aa123456#*@").GetAwaiter().GetResult();
+                Email = "admin@gmail.com"
+            }, "Admin1234#").GetAwaiter().GetResult();
 
             //check admin exist
-            var AppAdmin = userManager.FindByEmailAsync("aya.ayman@gmail.com").GetAwaiter().GetResult();
+            var AppAdmin = userManager.FindByEmailAsync("admin@gmail.com").GetAwaiter().GetResult();
 
             //asign role to admin
             if (AppAdmin != null)
